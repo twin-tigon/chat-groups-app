@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect, createContext, useContext, useRef } from "react";
 import { Routes, Route, Link, useParams, useNavigate } from "react-router-dom";
 
-const TOKEN_KEY = "slack-clone-app:token-key";
+const TOKEN_KEY = "chat-groups-app:token-key";
 
 const ChannelsContext = createContext();
 const TokenContext = createContext();

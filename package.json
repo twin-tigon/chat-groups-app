@@ -1,5 +1,5 @@
 {
-  "name": "slack-clone-app",
+  "name": "chat-groups-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
