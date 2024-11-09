@@ -21,38 +21,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { getMessages } from '@/api/messages'
-import { useWebSocket } from '@vueuse/core'
-import { useAuthStore } from '@/stores/auth'
+import { ref } from 'vue'
 import AppLayout from '@/layouts/AppLayout.vue'
+import { useMessages } from '@/composables/useMessages'
 
-const route = useRoute()
-const authStore = useAuthStore()
-const messages = ref([])
 const newMessage = ref('')
-const { data, send } = useWebSocket(
-  `ws://127.0.0.1:8000/ws/channels/${route.params.channelId}/messages?${authStore.token}`,
-)
-
-onMounted(async () => {
-  messages.value = await getMessages(route.params.channelId)
-})
-
-watch(
-  () => route.params.channelId,
-  async (channelId) => {
-    messages.value = await getMessages(channelId)
-  },
-)
-
-watch(data, (newMessage) => {
-  messages.value.push(JSON.parse(newMessage))
-})
+const { messages, sendMessage } = useMessages()
 
 function newMessageHandler() {
-  send(JSON.stringify({ message: newMessage.value }))
+  sendMessage(newMessage.value)
   newMessage.value = ''
 }
 </script>
